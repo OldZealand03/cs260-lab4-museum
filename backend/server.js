@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/museum', {
 // Configure multer so that it will upload to '../front-end/public/images'
 const multer = require('multer')
 const upload = multer({
-  dest: '../front-end/public/images/',
+  dest: '../frontend/public/images/',
   limits: {
     fileSize: 10000000
   }
@@ -27,6 +27,7 @@ const upload = multer({
 const itemSchema = new mongoose.Schema({
   title: String,
   path: String,
+  description: String,
 });
 
 // Create a model for items in the museum.
@@ -48,6 +49,7 @@ app.post('/api/photos', upload.single('photo'), async (req, res) => {
 app.post('/api/items', async (req, res) => {
   const item = new Item({
     title: req.body.title,
+    description: req.body.description,
     path: req.body.path,
   });
   try {
@@ -64,6 +66,35 @@ app.get('/api/items', async (req, res) => {
   try {
     let items = await Item.find();
     res.send(items);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+app.delete('/api/items/:id', async (req, res) => {
+  console.log('Delete ' , req.params.id);
+  try {
+    await Item.deleteOne({
+      _id: req.params.id
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+app.put('/api/items/:id', async (req, res) => {
+  console.log('Edit ' , req.params.id);
+  let item = await Item.findOne({
+    _id: req.params.id
+  });
+  item.title = req.body.title;
+  item.description = req.body.description;
+  try {
+    await item.save();
+    res.send(item);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

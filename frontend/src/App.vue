@@ -15,6 +15,7 @@
   </div>
   <div class="footer">
     <router-link to="/admin">Admin</router-link>
+    <a href="https://github.com/BYUCS260/museum-OldZealand03" target=_blank>Github</a>
   </div>
 </div>
 </template>
@@ -42,6 +43,10 @@ body {
 
 .title {
   margin-top: 5px;
+}
+
+a {
+  padding: 5px;
 }
 
 .title h1 {
