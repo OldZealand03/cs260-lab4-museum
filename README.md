@@ -13,6 +13,8 @@ repository for you and grant you access to it on GitHub. In order to start
 working on the lab, simply clone the repository to your laptop or other working
 environment.
 
+YOU MUST USE NODE VERSION 16
+
 ## Tutorial
 
 Use the [tutorials](/tutorials/README.md) to create the application. This will
